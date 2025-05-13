@@ -318,6 +318,7 @@ setTimeout(() => {
 	console.log("Final state of the controller:", controller.info());
 }, 30000);
 
+/* 
 // Old tests
 console.log("--- Old tests ---");
 
@@ -351,3 +352,4 @@ setTimeout(() => {
 }, 5000);
 // Test stop
 setTimeout(() => ctrl1.setAutoPlay(0), 30000);
+*/
