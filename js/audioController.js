@@ -126,7 +126,7 @@ function AudioDriver(name, channels) {
 }
 
 AudioDriver.prototype = Object.create(AudioDevice.prototype);
-AudioDriver.prototype.constructor = AudioDriver;
+AudioDriver.prototype.varructor = AudioDriver;
 
 // --- AudioController ---
 function AudioController(name, supportedTypes, maxDrivers) {
@@ -253,7 +253,74 @@ AudioController.prototype = Object.create(AudioDevice.prototype);
 AudioController.prototype.constructor = AudioController;
 
 // --- Tests ---
-/* 
+
+console.log("--- Testing the audio system ---");
+
+// Creating a MediaFile
+var song1 = new MediaFile("SongOne", ".mp3", 5, 10);
+var song2 = new MediaFile("SongTwo", ".mp3", 7, 12);
+var song3 = new MediaFile("Clip", ".wav", 3, 8);
+console.log("Media files created:", song1.info(), song2.info(), song3.info());
+
+// Creating a MemoryCard
+var card = new MemoryCard("SD", 20);
+console.log("A memory card of the type:", card.type);
+
+// Add files to the card
+card.addFile(song1);
+card.addFile(song2);
+card.addFile(song3);
+console.log(
+	"Files in the memory card:",
+	card.getFiles().map((f) => f.info())
+);
+console.log("Memory used:", card.getUsedSpace(), "MB");
+
+// Creating a AudioController
+var controller = new AudioController("MainController", [".mp3", ".wav"], 2);
+console.log("Controller created:", controller.getName());
+
+// Connecting the card to the controller
+controller.connectMemoryCard(card);
+console.log("Controller after connecting the card:", controller.info());
+
+// Creating a  AudioDriver
+var driver1 = new AudioDriver("FrontSpeaker", 2);
+var driver2 = new AudioDriver("BackSpeaker", 2);
+console.log("Drivers created:", driver1.info(), driver2.info());
+
+// Connecting drivers to the controller
+controller.addDriver(driver1);
+controller.addDriver(driver2);
+console.log("The controller after connecting the drivers:", controller.info());
+
+// Change volume
+controller.setVolume(80);
+driver1.setChannelVolume(0, 60);
+driver1.setChannelVolume(1, 70);
+driver2.setChannelVolume(0, 65);
+driver2.setChannelVolume(1, 75);
+console.log("Change channel volumes:");
+console.log(driver1.info());
+console.log(driver2.info());
+
+// Testing playback
+controller.playPause();
+setTimeout(() => {
+	controller.playPause(); // pause
+	controller.next(); // next file
+	controller.playPause(); // play again
+}, 5000);
+
+// Stop in 30 seconds (for safety)
+setTimeout(() => {
+	controller.playPause(); // stop
+	console.log("Final state of the controller:", controller.info());
+}, 30000);
+
+// Old tests
+console.log("--- Old tests ---");
+
 var file1 = new MediaFile("track1", ".mp3", 5, 10);
 var file2 = new MediaFile("track2", ".mp3", 8, 12);
 
@@ -284,4 +351,3 @@ setTimeout(() => {
 }, 5000);
 // Test stop
 setTimeout(() => ctrl1.setAutoPlay(0), 30000);
- */
