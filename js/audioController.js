@@ -126,7 +126,7 @@ function AudioDriver(name, channels) {
 }
 
 AudioDriver.prototype = Object.create(AudioDevice.prototype);
-AudioDriver.prototype.varructor = AudioDriver;
+AudioDriver.prototype.constructor = AudioDriver;
 
 // --- AudioController ---
 function AudioController(name, supportedTypes, maxDrivers) {
